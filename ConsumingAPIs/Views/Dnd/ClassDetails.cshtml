@@ -1,0 +1,50 @@
+﻿@model ConsumingAPIs.Models.ClassDetailsApi
+
+@{
+    ViewData["Title"] = "ClassDetails";
+}
+
+<h1>ClassDetails</h1>
+
+<div>
+    <h4>ClassDetailsApi</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.index)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.index)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.hit_die)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.hit_die)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.url)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.url)
+        </dd>
+    </dl>
+ <p>Starting Equipment</p>
+    @foreach (var item in Model.starting_equipment)
+    {
+            <ul>
+                <li>
+                   <span>@item.equipment.name (@item.quantity)</span> 
+                </li>    
+            </ul>
+    }
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

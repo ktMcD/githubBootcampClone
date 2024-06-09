@@ -1,0 +1,15 @@
+<div>
+  <form #newGameForm="ngForm" (ngSubmit)="addBoardGame(newGameForm)">
+    <p><label for="title">Game Title:</label> <input name="title" id="title" ngModel /> </p>
+    <p> <label for="description">Description:</label> <input name="description" id="description" ngModel /></p>
+    <p> <label for="yearPublished">Year Published:</label> <input name="yearPublished" id="yearPublished" ngModel /></p>
+    <p> <label for="playerCount">Recommended Player Count:</label> <input name="playerCount" id="playerCount" ngModel /></p>
+    <p><button>Add New Game</button></p>
+  </form>
+</div>
+
+<div>
+  <li *ngFor="let game of boardGames">        
+         <span  style="font-size: 20px;text-align: center;">{{game.title}}  </span>      
+  </li>
+</div>

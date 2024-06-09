@@ -1,0 +1,7 @@
+<!-- Use ngModel for two-way binding on forms. 
+    Make sure to add FormsModule from @angular/forms 
+    and add FormsModule to your imports in app.module.ts -->
+    
+<h1>Two way data binding and pipes</h1>
+<input [(ngModel)]="email" (keyup)="onKeyUp()">
+<h2>{{ email | lowercase }}</h2>

@@ -1,0 +1,29 @@
+<header></header>
+
+<ul class="nav nav-tabs nav-fill">
+    <li class="nav-item" [class.active]="viewMode == 'email'"><a class="nav-link" (click)="viewMode = 'email'">Two-Way Binding</a></li>
+    <li class="nav-item" [class.active]="viewMode == 'authors'"><a class="nav-link" (click)="viewMode = 'authors'">Directives & Services</a></li>
+    <li class="nav-item" [class.active]="viewMode == 'pipes'"><a class="nav-link" (click)="viewMode = 'pipes'">More Pipes & Property Binding</a></li>
+    <li class="nav-item" [class.active]="viewMode == 'like'"><a class="nav-link" (click)="viewMode = 'like'">Inputs & Outputs</a></li>
+    <li class="nav-item" [class.active]="viewMode == 'posts'"><a class="nav-link" (click)="viewMode = 'posts'">Consuming HTTP Services</a></li>
+    <li class="nav-item" [class.active]="viewMode == 'storage'"><a class="nav-link" (click)="viewMode = 'storage'">Store Data with Firebase</a></li>
+</ul>
+
+<div [ngSwitch]="viewMode">
+
+<app-email-input *ngSwitchCase="'email'"></app-email-input>
+
+<app-author-list *ngSwitchCase="'authors'"></app-author-list>
+
+<app-pipes-example *ngSwitchCase="'pipes'"></app-pipes-example>
+
+<like *ngSwitchCase="'like'" 
+    [likesCount]="tweet.likesCount"
+    [isLiked]="tweet.isLiked">
+</like>
+
+<app-posts *ngSwitchCase="'posts'"></app-posts>
+
+<storage *ngSwitchCase="'storage'"></storage>
+
+</div>

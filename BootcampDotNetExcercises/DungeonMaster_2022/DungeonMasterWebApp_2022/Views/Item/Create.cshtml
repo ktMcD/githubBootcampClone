@@ -1,0 +1,63 @@
+﻿@model DungeonMasterWebApp_2022.Models.ItemViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>ItemViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AttackModifier" class="control-label"></label>
+                <input asp-for="AttackModifier" class="form-control" />
+                <span asp-validation-for="AttackModifier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DefenseModifier" class="control-label"></label>
+                <input asp-for="DefenseModifier" class="form-control" />
+                <span asp-validation-for="DefenseModifier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lore" class="control-label"></label>
+                <input asp-for="Lore" class="form-control" />
+                <span asp-validation-for="Lore" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsEnchanted" /> @Html.DisplayNameFor(model => model.IsEnchanted)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsBreakable" /> @Html.DisplayNameFor(model => model.IsBreakable)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

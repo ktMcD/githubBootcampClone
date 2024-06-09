@@ -1,0 +1,9 @@
+<h1>More pipe examples and property binding</h1>
+
+<app-favorite-star></app-favorite-star>
+{{ course.title | uppercase }} <br>
+{{ course.students | number }} <br>
+{{ course.rating | number:"1.2-2" }} <br> <!-- also try 2.2-2 to get a leading zero, or 1.1-1 to round to the nearest whole number -->
+{{ course.price | currency }} <br>
+{{ course.releaseDate | date: "shortDate" }} <br>
+{{ course.description | summary:30 }}

@@ -1,0 +1,7 @@
+fa-icon {
+    color: #ccc;    
+}
+
+fa-icon.liked {
+    color: deeppink;
+}

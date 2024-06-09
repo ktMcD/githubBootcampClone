@@ -1,0 +1,74 @@
+﻿@model ConsumingAPIs.Models.MovieApi
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MovieApi</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.rank)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.rank)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.thumbnail)
+        </dt>
+        <dd class="col-sm-10">
+            <a href="@Model.image" target="_blank"><img src="@Model.thumbnail" /></a>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.rating)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.rating)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.year)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.year)
+        </dd>
+         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.trailer)
+        </dt>
+        <dd class="col-sm-10">
+            <a href="@Model.trailer">Trailer</a>
+            <!--@Html.DisplayFor(model => model.trailer)-->
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.imdbid)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.imdbid)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+

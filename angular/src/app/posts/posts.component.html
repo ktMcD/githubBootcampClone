@@ -1,0 +1,25 @@
+
+<h3>Hit enter to add stuff to this list</h3>
+<input (keyup.enter)="createPost(title)" #title
+type="text" class="form-control">
+<br>
+<p *ngIf="isFetching">Loading...</p>
+<ul class="list-group">
+    <li class="list-group-item" 
+    [@list]
+    *ngFor="let post of posts">
+    <button class="btn btn-info btn-sm mr-1"
+    (click)="deletePost(post)">Delete</button>
+    {{ post.title }}</li>
+</ul>
+
+<hr>
+
+<h1>Animations</h1>
+<button class="btn btn-info mr-2" (click)="onAnimate()">Animate!</button>
+<button class="btn btn-info" (click)="onShrink()">Shrink!</button>
+<hr>
+<div class="row mb-4">
+    <div class="col-5 m-3" [@divState]="state" style="width: 100px; height: 100px"></div>
+    <div class="col-5 m-3" [@wildState]="wildState" style="width: 100px; height: 100px"></div>
+</div>

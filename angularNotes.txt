@@ -1,0 +1,11 @@
+ng generate component [component name]
+if you want to do an array, create it in the typescript file
+in the export class
+To display, you need to set it up in AppComponent.html
+This is the top level "single" page that displays
+use the "selector" from [component name.ts] <app-dungeon></app-dungeon>
+ngmodel is the mechanism by which Angular stores data for use in components
+   ngmodel needs to be used with a button and function
+
+[(ngmodel)] is used for real time updates (LOVE THIS!)
+

@@ -1,0 +1,360 @@
+//T-SQL Scripts
+
+-- HERE
+CREATE TABLE Tickets(
+Id INT NOT NULL,
+SeatLocation NVARCHAR(100) NOT NULL,
+Price INT NOT NULL,
+NumberSold INT NOT NULL DEFAULT 0,
+PRIMARY KEY (Id)
+);
+
+INSERT INTO [Tickets]
+           ([Id],[SeatLocation],[Price],[NumberSold])
+     VALUES
+           (1,'Box Level',105,4),
+		   (2,'Dress Circle',75,2),
+		   (3,'Main Floor',58,10),
+		   (4,'Mid Balcony',38,0),
+		   (5,'Upper Balcony',19,3)
+
+SELECT COUNT(*) AS [Ticket Count] FROM Tickets
+WHERE Price > 50
+
+SELECT SUM(NumberSold) AS [Number Sold]
+FROM Tickets
+
+SELECT AVG(NumberSold) AS [Average Sold]
+FROM Tickets
+
+SELECT MIN(Price) AS [Minimum Price]
+FROM Tickets
+
+SELECT Max(Price) AS [Max Price]
+FROM Tickets
+
+SELECT SUM(NumberSold) AS 'Total Sold', SUM(Price * NumberSold) AS 'Total Revenue' FROM Tickets
+
+INSERT INTO [Tickets]
+           ([Id],[SeatLocation],[Price],[NumberSold])
+     VALUES
+           (6,'Box Level',105,4),
+		   (7,'Box Level',75,2),
+		   (8,'Box Level',58,10),
+		   (9,'Mid Balcony',38,0),
+		   (10,'Mid Balcony',19,3)
+
+
+INSERT INTO [Avengers]
+           ([Id],[CommonName],[HeroName],[PrimaryPower])
+     VALUES
+           (13,'Clark Kent', 'Superman','Strength'),
+		   (14,'Bruce wayne', 'Batman','Tactician'),
+		   (9,'Wally West', 'Flash','Speed'),
+		   (10,'Barry Allen', 'God Speed','Speed'),
+		   (11,'Tick', 'The Tick','Strength'),
+		   (12,'Mr. Gonzales', 'Speedy','Speed')
+
+SELECT PrimaryPower, COUNT(PrimaryPower) AS [Primary Power]
+FROM Avengers
+GROUP BY PrimaryPower
+HAVING COUNT(PrimaryPower) > 1
+
+– RELATIONSHIPS
+
+CREATE TABLE Class(
+	Id INT PRIMARY KEY,
+	Title NVARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Student(
+Id INT PRIMARY KEY,
+FullName NVARCHAR(100) NOT NULL,
+ClassId INT FOREIGN KEY REFERENCES Class(Id)
+);
+
+INSERT INTO Class
+           ([Id]
+           ,[Title])
+     VALUES
+(1,'.NET'),
+(2,'Java'),
+(3,'Front-End')
+
+
+INSERT INTO Student
+           ([Id]
+           ,[FullName]
+           ,[ClassId])
+     VALUES
+          (1,'G. Washington', 1),
+(2,'M. Gandi', 1),
+(3,'N. Mandela', null),
+(4,'Q. Victoria', 2)
+
+– LOOK UP TABLE
+CREATE TABLE ComicUniverse(
+	Id INT IDENTITY(1,1),
+	UniverseName NVARCHAR(100) NOT NULL,
+	PRIMARY KEY (Id)
+);
+
+INSERT INTO ComicUniverse ([UniverseName])
+     VALUES('DC'),('Marvel'),('Other')
+
+CREATE TABLE ComicUniverse(
+	Id INT IDENTITY(1,1),
+	UniverseName NVARCHAR(100) NOT NULL,
+	PRIMARY KEY (Id)
+);
+
+INSERT INTO ComicUniverse ([UniverseName])
+     VALUES('DC'),('Marvel'),('Other')
+
+CREATE TABLE Authors(
+Id INT IDENTITY (1,1) PRIMARY KEY,
+FirstName NVARCHAR(50) NOT NULL,
+LastName NVARCHAR(50) NOT NULL,
+BirthDate DATETIME
+);
+
+CREATE TABLE ComicBooks
+(
+ID INT IDENTITY(1,1) PRIMARY KEY,
+Title NVARCHAR(100) Not Null,
+AuthorId INT FOREIGN KEY REFERENCES Authors(Id),
+PartOfSeries NVARCHAR (10) null,
+ComicHero NVARCHAR (100) Not Null,
+UniverseId INT FOREIGN KEY REFERENCES ComicUniverse(Id)
+);
+
+CREATE TABLE BradsComicBooks
+(
+	ID INT IDENTITY(1,1) PRIMARY KEY,
+	ComicId INT FOREIGN KEY REFERENCES ComicBooks(Id),
+	PricePaid DECIMAL
+)
+
+-- Add the column and create foreign key
+ALTER TABLE Authors
+ADD MostKnownWorkId INT FOREIGN KEY REFERENCES ComicBooks(Id);
+
+
+– JOIN CODE
+
+
+SELECT * FROM Student
+SELECT * FROM Class
+
+-- INNER JOIN or JOIN (Shows ALL data that's related)
+SELECT s.FullName, c.Title
+FROM Student AS s
+JOIN Class AS c
+ON s.ClassId = c.Id 
+ORDER BY c.Title
+
+-- LEFT OUTER JOIN / LEFT JOIN
+-- RIGHT OUTER JOIN / RIGHT JOIN
+SELECT s.FullName, c.Title
+FROM Student AS s
+LEFT JOIN Class AS c
+ON s.ClassId = c.Id 
+
+SELECT c.Title, s.FullName
+FROM Class AS c
+LEFT JOIN Student AS s
+ON c.Id = s.ClassId
+WHERE ISNULL(s.FullName,'') = ''
+
+SELECT s.FullName, c.Title
+FROM Student AS s
+FULL JOIN Class as c
+ON c.Id = s.ClassId
+WHERE s.FullName IS NULL OR c.Id IS NULL
+
+
+SELECT * 
+FROM Student
+CROSS JOIN Class
+ORDER BY FullName
+
+SELECT c.Title, COUNT(s.FullName) AS StudentCount
+FROM Student AS s
+JOIN Class AS c
+ON s.ClassId = c.Id 
+GROUP BY c.Title
+
+SELECT cu.CompanyName,cu.EmailAddress,
+c.AddressID, a.City, a.StateProvince, a.PostalCode 
+FROM [SalesLT].[CustomerAddress] AS c
+JOIN [SalesLT].[Address] AS a
+ON a.AddressId = c.AddressId
+JOIN [SalesLT].[Customer] AS cu
+ON cu.CustomerID = c.CustomerID
+
+ --  I want to see the order date, total due and company name, with highest total due
+ -- at the top of the result
+
+SELECT s.OrderDate, s.TotalDue, c.CompanyName
+FROM [SalesLT].[SalesOrderHeader] AS s
+JOIN [SalesLT].[Customer] AS c
+on c.customerID = s.customerID
+ORDER BY s.TotalDue DESC
+
+//T-SQL Scripts
+
+-- CREATE TABLES
+-- CREATE TABLE table_name
+-- (column_name column_type, NULL/NOT NULL);
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'dbo' 
+                 AND  TABLE_NAME = 'Games'))
+BEGIN
+	DROP TABLE Games
+END
+CREATE TABLE Games
+(
+	Id BIGINT NOT NULL,
+	Title NVARCHAR(100) NOT NULL,
+	NumberOfPlayers INT NOT NULL,
+	PrimaryMechanism NVARCHAR(100) NOT NULL,
+	Review NVARCHAR(MAX) NULL,
+	PRIMARY KEY (Id)
+);
+
+IF (EXISTS (SELECT * 
+                 FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_SCHEMA = 'dbo' 
+                 AND  TABLE_NAME = 'Avengers'))
+BEGIN
+	DROP TABLE Avengers
+END
+CREATE TABLE Avengers(
+	Id BIGINT NOT NULL,
+	CommonName NVARCHAR(50) NOT NULL,
+	HeroName NVARCHAR(50) NOT NULL,
+	PrimaryPower NVARCHAR(100) NULL,
+	PRIMARY KEY (Id)
+);
+
+
+-- INSERT RECORDS
+-- INSERT INTO table (column1, column2, … )
+-- VALUES (expression1, expression2, …);
+
+
+INSERT INTO [Avengers]
+           ([Id],[CommonName],[HeroName],[PrimaryPower])
+     VALUES
+           (1,'Bruce Banner', 'Hulk','Strength'),
+		   (2,'Steve Rogers', 'Captain America','Tactician'),
+		   (3,'Thor', 'Thor','Lightening'),
+		   (4,'Tony Stark', 'Iron Man','Genius'),
+		   (5,'Natasha Romanov', 'Black Widow','Marksman'),
+		   (6,'Clint Barton', 'Hawkeye','Archer')
+
+
+INSERT INTO Games
+([Id],[Title],[NumberOfPlayers],[PrimaryMechanism])
+VALUES
+(1,'Clank in "Space"',4,'Dice Roll'),
+(2,'Clank',4,'Dice Roll')
+
+CREATE TABLE Persons (
+    Id BIGINT IDENTITY(1,1) PRIMARY KEY,
+    LastName NVARCHAR(50) NOT NULL,
+    FirstName NVARCHAR(50),
+    Age int
+);
+
+INSERT INTO Persons
+(LastName,FirstName,Age)
+VALUES
+('Tremaine', 'Scott',51),
+('Tremaine', 'Griffin',14)
+
+INSERT INTO Persons
+(LastName,FirstName,Age)
+VALUES
+('Tremaine', 'Brennen',12)
+
+-- SELECT 
+
+SELECT * FROM Avengers -- Try to avoid this, unless troubleshooting
+
+SELECT CommonName AS 'Common Name', HeroName AS 'Also Known As', PrimaryPower AS 'Primary Power'
+FROM Avengers
+
+-- WHERE (filters the data)
+
+SELECT TOP(1) Id, CommonName, HeroName,  PrimaryPower
+FROM Avengers
+-- WHERE CommonName = 'brucE bAnnEr' OR HeroName = 'thor'
+-- WHERE CommonName = 'brucE bAnnEr' AND PrimaryPower = 'strength'
+-- WHERE (CommonName LIKE '%er%' AND PrimaryPower = 'strength') OR  CommonName LIKE '%on%'
+-- WHERE PrimaryPower NOT IN ('archer','tactician')
+-- WHERE PrimaryPower IN ('archer','tactician')
+-- WHERE CommonName > 'm'
+WHERE Id BETWEEN 2 AND 5 -- INCLUSIVE
+-- WHERE CommonName BETWEEN 'a' AND 'm'
+ORDER BY HeroName DESC
+-- UPDATE/DELETE 
+-- UPDATE [tableName] SET [ColumnName] = [Value]
+-- DELETE FROM [tableName] 
+-- WHERE (both)
+
+ UPDATE persons SET LastName = 'Smith'
+ SELECT * FROM Persons
+
+ UPDATE Avengers SET PrimaryPower = 'Web Slinging'
+ WHERE HeroName LIKE 'spider%'
+
+
+ DELETE FROM Avengers
+ WHERE HeroName = 'Hawkeye'
+
+
+ SELECT * FROM Avengers
+
+ SELECT * FROM Persons
+  DELETE FROM Persons
+  TRUNCATE TABLE Persons
+
+
+Get the name of the Avenger who's hero_name is Hulk.
+
+SCRIPT (June)
+SELECT * FROM Avengers
+WHERE HeroName = 'hulk'
+
+
+List all the Avengers in alphabetical order by hero_name.
+
+SCRIPT (Dan)
+SELECT CommonName, HeroName
+FROM Avengers
+ORDER BY HeroName
+
+Add a new Avenger.
+name: Cluck Kent
+hero_name: Grant Chirpus
+primary_power: Finding Bugs
+
+SCRIPT (Brad)
+INSERT INTO Avengers
+(Id, HeroName, CommonName, PrimaryPower)
+VALUES
+(8, 'Grant Chirpus', 'Cluck Kent', 'Finding Bugs')
+
+Change Thor's primary_power to Hammer.
+
+UPDATE Avengers SET PrimaryPower = 'Hammer'
+WHERE HeroName = 'Thor'
+
+Remove Black Widow
+
+SCRIPT (Eric)
+DELETE from Avengers
+where HeroName = 'Black Widow'
